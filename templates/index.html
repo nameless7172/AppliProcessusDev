@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>GET Request Example</title>
+</head>
+<body>
+    <h1>Chargement données</h1>
+    <button onclick="getHello()">Charger les données de Google Sheet</button>
+    <div id="result"></div>
+    <div class="loading">Je charge</div>
+    <script>
+        document.getElementsByClassName("loading")[0].style.visibility = "hidden";
+        function getHello() {
+            const url = "http://127.0.0.1:5000/google-sheet-content";
+            document.getElementsByClassName("loading")[0].style.visibility = "visible";
+            fetch(url)
+                .then(response => response.text())
+                .then(data => {
+                    const resultDiv = document.getElementById("result");
+                    document.getElementsByClassName("loading")[0].style.visibility = "hidden";
+                    resultDiv.innerHTML = data;
+                });
+        }
+    </script>
+</body>
+</html>
