@@ -8,8 +8,19 @@
     <button onclick="getHello()">Charger les données de Google Sheet</button>
     <div id="result"></div>
     <div class="loading">Je charge</div>
+
+    <button onclick="page1()">page1</button>
+
+    <button onclick="page2()">page2</button>
+
     <script>
         document.getElementsByClassName("loading")[0].style.visibility = "hidden";
+        function page1(){
+            window.location.href = "http://127.0.0.1:5000/page1";
+        }
+        function page2(){
+            window.location.href = "http://127.0.0.1:5000/page2";
+        }
         function getHello() {
             const url = "http://127.0.0.1:5000/google-sheet-content";
             document.getElementsByClassName("loading")[0].style.visibility = "visible";

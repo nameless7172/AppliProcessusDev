@@ -12,19 +12,12 @@ cors = CORS(app)
 def home():
     return render_template("index.html")
 
-@app.route("/user/<name>", methods=["GET"])
-def get_user(name):
-    return f"Hello, {name}!"
-
-@app.route("/user", methods=["POST"])
-def create_user():
-    name = request.form.get("name")
-    email = request.form.get("email")
-    return f"Created user with name {name} and email {email}."
-
-@app.route("/new_page")
-def new_page():
-    return render_template("new_page.html")
+@app.route("/page1")
+def page1():
+    return render_template("page1.html")
+@app.route("/page2")
+def page2():
+    return render_template("page2.html")
 
 # Set up authentication using the JSON client file
 creds = service_account.Credentials.from_service_account_file(
