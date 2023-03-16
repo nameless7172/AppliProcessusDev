@@ -4,8 +4,9 @@
     <title>GET Request Example</title>
 </head>
 <body>
-    <h1>Chargement données</h1>
-    <button onclick="getHello()">Charger les données de Google Sheet</button>
+    <h1>Accueil</h1>
+    <button onclick="getGoogleSheetData()">Charger les données de Google Sheet</button>
+    <h3>Liste des programmes de musculation</h3>
     <div id="result"></div>
     <div class="loading">Je charge</div>
 
@@ -21,7 +22,7 @@
         function page2(){
             window.location.href = "http://127.0.0.1:5000/page2";
         }
-        function getHello() {
+        function getGoogleSheetData() {
             const url = "http://127.0.0.1:5000/google-sheet-content";
             document.getElementsByClassName("loading")[0].style.visibility = "visible";
             fetch(url)
@@ -32,6 +33,15 @@
                     resultDiv.innerHTML = data;
                 });
         }
+        
+        function generate_template(id) {
+        const data = JSON.parse(localStorage.getItem('data'));
+        const row = data[id];
+        const name = row[0]; // Assuming the first cell in the row contains the template name
+        const url = `/generate-template/${name}`;
+        window.location.href = url;
+}
+
     </script>
 </body>
 </html>
