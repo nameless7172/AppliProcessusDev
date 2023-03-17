@@ -7,10 +7,10 @@
     <table>
         <thead>
             <tr>
-                <th>Column 1</th>
-                <th>Column 2</th>
-                <th>Column 3</th>
-                <th>Open</th>
+                <th>Nom du programme</th>
+                <th>Description</th>
+                <th>Informations complémentaires</th>
+                <th></th>
                 <!-- Add more columns as needed -->
             </tr>
         </thead>
@@ -22,7 +22,7 @@
                     <td>{{ row[1] }}</td>
                     <td>{{ row[2] }}</td>
                     <td>
-                        {% if row[0] != '' and row[1] != '' and row[2] != '' %}
+                        {% if row is defined and row[0] != '' and row[1] != '' and row[2] != '' %}
                             <form method="post" action="{{ url_for('render_data_cell', row_index=loop.index0) }}">
                                 <button type="submit">Open</button>
                             </form>
