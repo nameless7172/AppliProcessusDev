@@ -17,24 +17,36 @@ creds = service_account.Credentials.from_service_account_file(
 )
 # Define the spreadsheet ID and range
 SPREADSHEET_ID = '1sokVn-TX3t1DQ3IQPAAl7B-F_xnyZfLYShrJ_MxEfGY'
-RANGE_NAME = 'Sheet1!A1:ZZ'  # Include all columns and rows
+RANGE_NAME = 'Programme 1!A1:ZZ'  # Include all columns and rows
 
 # Fetch the data from the Google Sheets API
 service = build('sheets', 'v4', credentials=creds)
 result = service.spreadsheets().values().get(
     spreadsheetId=SPREADSHEET_ID, range=RANGE_NAME).execute()
-values = result.get('values', [])
+values = result.get('values', [])\
+
+# Check if data was retrieved successfully
+@app.route('/verify-spreadsheet-access', methods=['GET'])
+def verify_spreadsheet_access():
+    try:
+        # Call the spreadsheets().get() method to check if the API has access to the spreadsheet
+        service.spreadsheets().get(spreadsheetId=SPREADSHEET_ID).execute()
+        return 'Access to spreadsheet granted!'
+    except Exception as e:
+        return f'Error: {str(e)}'
+
 
 @app.route("/")
 def home():
     return render_template("index.html")
 
-@app.route("/page1")
-def page1():
-    return render_template("page1.html")
-@app.route("/page2")
-def page2():
-    return render_template("page2.html")
+@app.route("/programmes")
+def programmes():
+    return render_template("programmes.html")
+
+@app.route("/contact")
+def contact():
+    return render_template("contact.html")
 
 
 @app.route('/google-sheet-content', methods=['GET'])
