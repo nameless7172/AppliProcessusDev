@@ -4,15 +4,15 @@
     <title>Programmes</title>
 </head>
 <body>
-    <h1>Page1</h1>
-    {% include "navbar.html" %}
     <div class="container">
+        <h1>Liste des programmes</h1>
+        {% include "navbar.html" %}
         <button class="btn btn-primary" onclick="getGoogleSheetData()">Charger les données de Google Sheet</button>
         
         <h3>Liste des programmes de musculation</h3>
         <div id="result"></div>
-        <div class="loading">Je charge</div>
-
+        <div class="loading">Chargement en cours</div>
+        {% include "footer.html" %}
     </div>
     <script>
         function getGoogleSheetData() {
