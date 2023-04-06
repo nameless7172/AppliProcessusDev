@@ -9,6 +9,9 @@
         <h1>Accueil</h1>
         {% include "navbar.html" %}
         <button class="btn btn-primary" onclick="checkCreds()">Check Creds</button>
+        <button class="btn btn-primary" onclick="authentification()">Authentification</button>
+        <button class="btn btn-primary" onclick="disconnect()">Déconnexion</button>
+        <div>{{session['name']}}</div>
         <div id="resultCheckCreds"></div>
     </div>
     {% include "footer.html" %}
@@ -52,6 +55,17 @@
                     const resultDiv = document.getElementById("resultCheckCreds");
                     resultDiv.innerHTML = data;
                 });
+        }
+        function authentification() {
+            const url = "http://localhost:5000/login";
+            // redirect to the login page
+            window.location.href = url;
+        }
+
+        function disconnect() {
+            const url = "http://localhost:5000/logout";
+            // redirect to the login page
+            window.location.href = url;
         }
     </script>
 </body>

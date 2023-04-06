@@ -1,10 +1,26 @@
-from flask import Flask, request, render_template, jsonify
+import os
+import pathlib
+from flask import Flask, abort, redirect, request, render_template, jsonify, session
 from flask_cors import CORS
 from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
+from google_auth_oauthlib.flow import Flow
+from google.oauth2 import id_token
+import google.auth.transport.requests
+from pip._vendor import cachecontrol
 import json
+import os
+import pathlib
+
+import requests
+from flask import Flask, session, abort, redirect, request
+from google.oauth2 import id_token
+from google_auth_oauthlib.flow import Flow
+from pip._vendor import cachecontrol
+import google.auth.transport.requests
+import requests
 
 app = Flask(__name__)
 cors = CORS(app)
@@ -24,6 +40,15 @@ service = build('sheets', 'v4', credentials=creds)
 result = service.spreadsheets().values().get(spreadsheetId=SPREADSHEET_ID, range=RANGE_NAME).execute()
 values = result.get('values', [])\
 
+def login_is_required(function):
+    def wrapper(*args, **kwargs):
+        if "google_id" not in session:
+            return abort(401)  # Authorization required
+        else:
+            return function()
+
+    return wrapper
+
 # Check if data was retrieved successfully
 @app.route('/verify-spreadsheet-access', methods=['GET'])
 def verify_spreadsheet_access():
@@ -35,9 +60,6 @@ def verify_spreadsheet_access():
         return f'Error: {str(e)}'
 
 
-@app.route("/")
-def home():
-    return render_template("index.html")
 
 @app.route("/programmes")
 def programmes():
@@ -108,7 +130,60 @@ def render_sub_data_cell(row_index):
     return render_template('module.html', data=new_values, rendered_data_cell=rendered_data_cell)
 
 
+app.secret_key = "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" # make sure this matches with that's in client_secret.json
 
+os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1" # to allow Http traffic for local dev
+
+GOOGLE_CLIENT_ID = "930412895866-kl7tqag8khks0bjgknfatq2qldhjuh3g.apps.googleusercontent.com"
+client_secrets_file = os.path.join(pathlib.Path(__file__).parent, "client_secret2.json")
+
+flow = Flow.from_client_secrets_file(
+    client_secrets_file=client_secrets_file,
+    scopes=["https://www.googleapis.com/auth/userinfo.profile", "https://www.googleapis.com/auth/userinfo.email", "openid"],
+    redirect_uri="http://localhost:5000/callback"
+)
+
+@app.route("/login")
+def login():
+    authorization_url, state = flow.authorization_url()
+    print(authorization_url, state)
+    session["state"] = state
+    return redirect(authorization_url)
+
+
+@app.route("/callback")
+def callback():
+    flow.fetch_token(authorization_response=request.url)
+
+    if not session["state"] == request.args["state"]:
+        abort(500)  # State does not match!
+
+    credentials = flow.credentials
+    request_session = requests.session()
+    cached_session = cachecontrol.CacheControl(request_session)
+    token_request = google.auth.transport.requests.Request(session=cached_session)
+
+    id_info = id_token.verify_oauth2_token(
+        id_token=credentials._id_token,
+        request=token_request,
+        audience=GOOGLE_CLIENT_ID
+    )
+
+    session["google_id"] = id_info.get("sub")
+    session["name"] = id_info.get("name")
+    return redirect("/")
+
+@app.route("/")
+def home():
+    if 'name' in session:
+        print(session['name'] + " est connecté")
+    return render_template("index.html")
+
+
+@app.route("/logout")
+def logout():
+    session.clear()
+    return redirect("/")
 
 if __name__ == "__main__":
     app.run()
