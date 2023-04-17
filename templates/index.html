@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>GET Request Example</title>
+   
+</head>
+<body>
+    <div class="container">
+        <h1>Accueil</h1>
+        {% include "navbar.html" %}
+        <button class="btn btn-primary" onclick="checkCreds()">Vérification de l'utilisateur</button>
+        <button class="btn btn-primary" onclick="authentification()">Authentification</button>
+        <button class="btn btn-primary" onclick="disconnect()">Déconnexion</button>
+
+        <div id="resultCheckCreds"></div>
+    </div>
+    {% include "footer.html" %}
+    <!-- Add Bootstrap JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // Modify the JavaScript code to use Bootstrap classes and components
+        document.getElementsByClassName("loading")[0].style.visibility = "hidden";
+        function programmes(){
+            window.location.href = "http://127.0.0.1:5000/programmes";
+        }
+        function contact(){
+            window.location.href = "http://127.0.0.1:5000/contact";
+        }
+        function getGoogleSheetData() {
+            const url = "http://127.0.0.1:5000/google-sheet-content";
+            document.getElementsByClassName("loading")[0].style.visibility = "visible";
+            fetch(url)
+                .then(response => response.text())
+                .then(data => {
+                    const resultDiv = document.getElementById("result");
+                    document.getElementsByClassName("loading")[0].style.visibility = "hidden";
+                    resultDiv.innerHTML = data;
+                });
+        }
+        
+        function generate_template(id) {
+            const data = JSON.parse(localStorage.getItem('data'));
+            const row = data[id];
+            const name = row[0]; // Assuming the first cell in the row contains the template name
+            const url = `/generate-template/${name}`;
+            window.location.href = url;
+        }
+
+        function checkCreds() {
+            const url = "http://localhost:5000/verify-spreadsheet-access";
+            fetch(url)
+                .then(response => response.text())
+                .then(data => {
+                    const resultDiv = document.getElementById("resultCheckCreds");
+                    resultDiv.innerHTML = data;
+                });
+        }
+        function authentification() {
+            const url = "http://localhost:5000/login";
+            // redirect to the login page
+            window.location.href = url;
+        }
+
+        function disconnect() {
+            const url = "http://localhost:5000/logout";
+            // redirect to the login page
+            window.location.href = url;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Data Table</title>
+</head>
+<body>
+    <table>
+        <thead>
+            <tr>
+                <th>Nom du programme</th>
+                <th>Description</th>
+                <th>Informations complémentaires</th>
+                <th></th>
+                <!-- Add more columns as needed -->
+            </tr>
+        </thead>
+        <tbody>
+            {% set row_index = 0 %}
+            {% for row in data %}
+                <tr>
+                    <td>{{ row[0] }}</td>
+                    <td>{{ row[1] }}</td>
+                    <td>{{ row[2] }}</td>
+                    <td>
+                        {% if row is defined and row[0] != '' and row[1] != '' and row[2] != '' %}
+                            <form method="post" action="{{ url_for('render_data_cell', row_index=loop.index0) }}">
+                                <button type="submit">Open</button>
+                            </form>
+                        {% endif %}
+                    </td>
+                    <!-- Add more columns as needed -->
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

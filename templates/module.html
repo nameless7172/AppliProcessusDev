@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Programme de musculation</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Programme de musculation</h1>
+        {% include "navbar.html" %}
+    </div>
+    <div class="container">
+        <h2>Exercices</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Index</th>
+                <th>Options</th>
+                <th></th>
+            </tr>
+            </thead>
+                    <tbody>
+                    <!-- Loop through the elements of the data array -->
+                    {% for exercise in data.values()|first %}
+                        <tr>
+                            <td>{{ exercise }}</td>
+                            <td>
+                                <form method="post" action="{{ url_for('render_sub_sub_data_cell', row_index=loop.index0) }}">
+                                    <button type="submit">Open</button>
+                                    {% set moduleNumber = session['moduleNumber'] %}
+                                    <input type="button" value="Commencer" onclick="commencerExercice('{{ exercise }}','{{ moduleNumber }}')">
+                                    <input type="button" value="Terminer" onclick="terminerExercice('{{ exercise }}','{{ moduleNumber }}')">
+                                </form>
+                            </td>
+                            
+                        </tr>
+                    {% endfor %}
+                </tbody>
+        </table>
+    </div>
+</body>
+</html>
+<script>
+    function commencerExercice(exercise, moduleNumber) {
+
+        // make an AJAX call to the Flask endpoint
+        fetch('/CommencerExercice', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                moduleNumber: moduleNumber,
+                exercice: exercise
+            })
+        })
+        .then(response => {
+            if (response.ok) {
+                console.log('Commencer Exercice success!');
+            } else {
+                console.error('Commencer Exercice failed:', response.statusText);
+            }
+        })
+        .catch(error => {
+            console.error('Commencer Exercice failed:', error);
+        });
+    }
+    function terminerExercice(exercise, moduleNumber) {
+
+        // make an AJAX call to the Flask endpoint
+        fetch('/TerminerExercice', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                moduleNumber: moduleNumber,
+                exercice: exercise
+            })
+        })
+        .then(response => {
+            if (response.ok) {
+                console.log('Commencer Exercice success!');
+            } else {
+                console.error('Commencer Exercice failed:', response.statusText);
+            }
+        })
+        .catch(error => {
+            console.error('Commencer Exercice failed:', error);
+        });
+    }
+    </script>
+    

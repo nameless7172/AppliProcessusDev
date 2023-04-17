@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Programme de musculation</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Programme de musculation</h1>
+        {% include "navbar.html" %}
+    </div>
+<div class = "container">
+    <h2>Modules</h2>
+    <table>
+        <thead>
+          <tr>
+            <th>Index</th>
+            <th>Data</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+            
+          <!-- Loop through the elements of the data array -->
+          {% for element in data %}
+          <tr>
+            <td>{{ element[0] }}</td> <!-- Show the value of the current element -->
+            <td>
+              <form method="post" action="{{ url_for('render_sub_data_cell', row_index=loop.index0) }}">
+                <button type="submit">Open</button>
+              </form>
+            </td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+</div>
+    
+    {% include "footer.html" %}
+
+</body>
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Programme de musculation</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Programme de musculation</h1>
+        {% include "navbar.html" %}
+    </div>
+    <div class="container">
+        <h2>Description de l'exercice</h2>
+        {% set module_number = session['moduleNumber'] %}
+        
+        {% for d in data %}
+            {% if url[-1]|int + 1 == d[1][-1]|int and session['moduleNumber'] == d[0][-1]|int %}
+                <h1 class="mt-5">Exercice : {{ d[1] }}</h1>
+
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Module : {{ d[0] }}</h5>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Exercice : {{ d[1] }}</h5>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <img class="card-img-top" src="{{ d[2] }}" alt="Card image cap">
+                </div>
+
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Durée : {{ d[3] }}</h5>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Lien : <a href="{{ d[4] }}">{{ d[4] }}</a></h5>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Etat : {{ d[5] }}</h5>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Date de début prévisionnelle : {{ d[6] }}</h5>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Date de début réelle : {{ d[7] }}</h5>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Date de fin prévisionnelle : {{ d[8] }}</h5>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Date de fin réelle : {{ d[9] }}</h5>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Type d'exercice :  {{ d[10] }}</h5>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Commentaire : {{ d[11] }}</h5>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Feed-back du coach : {{ d[12] }}</h5>
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+</body>
+</html>
+
