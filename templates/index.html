@@ -101,7 +101,6 @@
 
     <script>
         // Modify the JavaScript code to use Bootstrap classes and components
-        document.getElementsByClassName("loading")[0].style.visibility = "hidden";
         function programmes(){
             window.location.href = "http://127.0.0.1:5000/programmes";
         }
@@ -110,12 +109,10 @@
         }
         function getGoogleSheetData() {
             const url = "http://127.0.0.1:5000/google-sheet-content";
-            document.getElementsByClassName("loading")[0].style.visibility = "visible";
             fetch(url)
                 .then(response => response.text())
                 .then(data => {
                     const resultDiv = document.getElementById("result");
-                    document.getElementsByClassName("loading")[0].style.visibility = "hidden";
                     resultDiv.innerHTML = data;
                 });
         }
