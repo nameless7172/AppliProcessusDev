@@ -41,7 +41,6 @@
 </html>
 <script>
     function commencerExercice(exercise, moduleNumber) {
-
         // make an AJAX call to the Flask endpoint
         fetch('/CommencerExercice', {
             method: 'POST',
@@ -56,16 +55,19 @@
         .then(response => {
             if (response.ok) {
                 console.log('Commencer Exercice success!');
+                showMessage('Exercise started successfully!');
             } else {
                 console.error('Commencer Exercice failed:', response.statusText);
+                showMessage('Failed to start exercise. Please try again.');
             }
         })
         .catch(error => {
             console.error('Commencer Exercice failed:', error);
+            showMessage('An error occurred while starting the exercise. Please try again.');
         });
     }
+    
     function terminerExercice(exercise, moduleNumber) {
-
         // make an AJAX call to the Flask endpoint
         fetch('/TerminerExercice', {
             method: 'POST',
@@ -79,14 +81,37 @@
         })
         .then(response => {
             if (response.ok) {
-                console.log('Commencer Exercice success!');
+                console.log('Terminer Exercice success!');
+                showMessage('Exercise terminated successfully!');
             } else {
-                console.error('Commencer Exercice failed:', response.statusText);
+                console.error('Terminer Exercice failed:', response.statusText);
+                showMessage('Failed to terminate exercise. Please try again.');
             }
         })
         .catch(error => {
-            console.error('Commencer Exercice failed:', error);
+            console.error('Terminer Exercice failed:', error);
+            showMessage('An error occurred while terminating the exercise. Please try again.');
         });
     }
+    
+    function showMessage(message) {
+        // Create a div element for the message
+        const messageDiv = document.createElement('div');
+        messageDiv.textContent = message;
+        messageDiv.style.backgroundColor = '#f0f0f0';
+        messageDiv.style.color = '#333';
+        messageDiv.style.padding = '10px';
+        messageDiv.style.marginBottom = '10px';
+    
+        // Append the message div to the body or a specific element in your HTML
+        document.body.appendChild(messageDiv);
+    
+        // Automatically remove the message after a certain time (e.g., 3 seconds)
+        setTimeout(() => {
+            messageDiv.remove();
+        }, 3000);
+    }
+    
+    
     </script>
     

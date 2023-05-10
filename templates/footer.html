@@ -1,7 +1,9 @@
-<div class="container">
-    <footer class="fixed-bottom">
-        <div>{{session['name']}}</div>
-        <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo">
-        <h2 style="color: black;">MuscoWeeb TKM</h2>
+<div class="container" style="padding-bottom: 20px;">
+    <footer class="fixed-bottom" style="background-color: #333; padding: 20px;">
+        <div style="display: flex; align-items: center; justify-content: center; color: white;">
+            <div>{{ session['name'] }}</div>
+            <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" style="width: 50px; height: auto; margin-right: 10px;">
+            <h2 style="font-size: 24px; margin: 0;">MuscoWeeb TKM</h2>
+        </div>
     </footer>
 </div>
