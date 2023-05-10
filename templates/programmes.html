@@ -2,27 +2,41 @@
 <html>
 <head>
     <title>Programmes</title>
+    <style>
+        .neon {
+            text-align: center;  
+            color: #391515;
+            text-shadow:  0 0 7px #fff, 
+                    0 0 10px #fff, 
+                    0 0 42px rgb(230, 18, 124),   
+                    0 0 77px rgb(230, 18, 124), 
+                    0 0 100px rgb(230, 18, 124) 
+        }
+        body{
+            color: white; /* Optionnel : pour changer la couleur de texte en blanc */
+        }
+        body, h1, h2, h3, h4, p, a {
+            color: white;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
-        <h1>Liste des programmes</h1>
+        <h1 class="neon">Liste des programmes</h1>
         {% include "navbar.html" %}
         <button class="btn btn-primary" onclick="getGoogleSheetData()">Charger les données de Google Sheet</button>
         
         <h3>Liste des programmes de musculation</h3>
         <div id="result"></div>
-        <div class="loading">Chargement en cours</div>
         {% include "footer.html" %}
     </div>
     <script>
         function getGoogleSheetData() {
             const url = "http://127.0.0.1:5000/google-sheet-content";
-            document.getElementsByClassName("loading")[0].style.visibility = "visible";
             fetch(url)
                 .then(response => response.text())
                 .then(data => {
                     const resultDiv = document.getElementById("result");
-                    document.getElementsByClassName("loading")[0].style.visibility = "hidden";
                     resultDiv.innerHTML = data;
                 });
         }
@@ -30,3 +44,4 @@
 
 </body>
 </html>
+

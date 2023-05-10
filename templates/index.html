@@ -2,19 +2,100 @@
 <html>
 <head>
     <title>GET Request Example</title>
-   
+    <style>
+        .neon {
+            text-align: center;  
+            color: #391515;;
+            text-shadow:  0 0 7px #fff, 
+                    0 0 10px #fff, 
+                    0 0 42px rgb(230, 18, 124),   
+                    0 0 77px rgb(230, 18, 124), 
+                    0 0 100px rgb(230, 18, 124) 
+        }
+        body {
+            color: white; /* Optionnel : pour changer la couleur de texte en blanc */
+            overflow-x: hidden;
+            height: 100%;
+        }
+        body, h1, h2, h3, h4, p, a {
+            color: white;
+        }
+        .card {
+            background-image: url('{{ url_for("static", filename="sushi.png") }}');
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px auto;
+            max-width: 650px;
+            max-height: 200px;
+            position: relative;
+          }
+          
+        /*menu dropdown*/
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: white;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+        
+        .dropdown-content a {
+            color: #818181;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            transition: 0.3s;
+        }
+        
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+            color: black;
+        }
+        
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .logo{
+            color: #818181;
+            height: 100%;
+        }
+        html{
+            height: 100%;
+        }
+        .access-granted {
+            color: #28a745; /* Green color */
+            font-size: 16px;
+            font-weight: bold;
+            text-align: center;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #dff0d8; /* Light green background */
+            display: none; /* Hide the element by default */
+          }
+          
+          
+    </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Accueil</h1>
-        {% include "navbar.html" %}
-        <button class="btn btn-primary" onclick="checkCreds()">Vérification de l'utilisateur</button>
-        <button class="btn btn-primary" onclick="authentification()">Authentification</button>
-        <button class="btn btn-primary" onclick="disconnect()">Déconnexion</button>
-
-        <div id="resultCheckCreds"></div>
+    <div id="main" class="card">
+        <h1 class="neon">MuscoWeeb</h1>
+        <h2 class="neon">DES MUSCLES, DES SUSHIS ET DU PYTHON</h2>
     </div>
-    {% include "footer.html" %}
+    {% include "navbar.html" %}
+    <div class="container">
+        <div class="dropdown">
+            <button class="dropbtn" onclick="toggleDropdown()">Options</button>
+            <div id="myDropdown" class="dropdown-content">
+                <a href="#" onclick="checkCreds()">Vérification</a>
+                <a href="#" onclick="authentification()">Authentification</a>
+                <a href="#" onclick="disconnect()">Déconnexion</a>
+            </div>
+        </div>
+        <div id="resultCheckCreds" class="access-granted"></div>
+        {% include "footer.html" %}
+    </div>
     <!-- Add Bootstrap JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
 
@@ -53,6 +134,7 @@
                 .then(response => response.text())
                 .then(data => {
                     const resultDiv = document.getElementById("resultCheckCreds");
+                    document.getElementById("resultCheckCreds").style.display = "block";
                     resultDiv.innerHTML = data;
                 });
         }
@@ -67,6 +149,18 @@
             // redirect to the login page
             window.location.href = url;
         }
+
+        function openNav() {
+            document.getElementById("sideNavigation").style.width = "250px";
+            document.getElementById("main").style.marginLeft = "250px";
+        }
+
+        function closeNav() {
+            document.getElementById("sideNavigation").style.width = "0";
+            document.getElementById("main").style.marginLeft = "0";
+        }
+
     </script>
 </body>
+
 </html>

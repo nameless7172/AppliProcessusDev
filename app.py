@@ -61,7 +61,7 @@ def verify_spreadsheet_access():
     try:
         # Call the spreadsheets().get() method to check if the API has access to the spreadsheet
         service.spreadsheets().get(spreadsheetId=SPREADSHEET_ID).execute()
-        return 'Access to spreadsheet granted!'
+        return 'Le fichier de configuration client_secret.json est correcte. Vous avez accès au fichier Google Sheet'
     except Exception as e:
         return f'Error: {str(e)}'
 
@@ -115,7 +115,7 @@ def render_data_cell(row_index):
     # Render the program.html template with the rendered data_cell.html as a context variable
     return render_template('program.html', data=new_list)
 
-#TODO 
+
 @app.route('/render_sub_data_cell/<int:row_index>', methods=['POST'])
 def render_sub_data_cell(row_index):
     session["moduleNumber"] = row_index + 1
@@ -150,10 +150,6 @@ def render_sub_data_cell(row_index):
         
         # Add the exercise to the list for the current module
         exercises_by_module[module].append(exercise_name)
-    # print(exercises_by_module)
-
-    # Render the data_cell.html template with the row data as a context variable
-    # rendered_data_cell = render_template('sub_data_cell.html', data=exercises_by_module)
 
     # Render the program.html template with the rendered sub_data_cell.html as a context variable
     return render_template('module.html', data=exercises_by_module)

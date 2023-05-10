@@ -2,13 +2,23 @@
 <html>
 <head>
     <title>Contact</title>
+    <style>
+        .neon {
+            text-align: center;  
+            color: #391515;
+            text-shadow:  0 0 7px #fff, 
+                    0 0 10px #fff, 
+                    0 0 42px rgb(230, 18, 124),   
+                    0 0 77px rgb(230, 18, 124), 
+                    0 0 100px rgb(230, 18, 124) 
+        }
+    </style>
 </head>
 <body>
     <div class="container">
-        <h1>Contact</h1>
+        <h1 class="neon">Contact</h1>
         {% include "navbar.html" %}
         {% include "footer.html" %}
-
     </div>
     <div class="container">
 		<h1 class="text-center mb-4">Contactez-nous</h1>
@@ -33,6 +43,5 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
 </body>
 </html>
