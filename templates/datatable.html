@@ -24,7 +24,7 @@
                     <td>
                         {% if row is defined and row[0] != '' and row[1] != '' and row[2] != '' %}
                             <form method="post" action="{{ url_for('render_data_cell', row_index=loop.index0) }}">
-                                <button type="submit">Open</button>
+                                <button type="submit">Ouvrir</button>
                             </form>
                         {% endif %}
                     </td>

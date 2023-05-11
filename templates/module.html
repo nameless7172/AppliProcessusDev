@@ -9,33 +9,36 @@
         {% include "navbar.html" %}
     </div>
     <div class="container">
-        <h2>Exercices</h2>
-        <table>
-            <thead>
-            <tr>
-                <th>Index</th>
-                <th>Options</th>
-                <th></th>
-            </tr>
-            </thead>
-                    <tbody>
-                    <!-- Loop through the elements of the data array -->
-                    {% for exercise in data.values()|first %}
-                        <tr>
-                            <td>{{ exercise }}</td>
-                            <td>
-                                <form method="post" action="{{ url_for('render_sub_sub_data_cell', row_index=loop.index0) }}">
-                                    <button type="submit">Open</button>
-                                    {% set moduleNumber = session['moduleNumber'] %}
-                                    <input type="button" value="Commencer" onclick="commencerExercice('{{ exercise }}','{{ moduleNumber }}')">
-                                    <input type="button" value="Terminer" onclick="terminerExercice('{{ exercise }}','{{ moduleNumber }}')">
-                                </form>
-                            </td>
-                            
-                        </tr>
-                    {% endfor %}
-                </tbody>
-        </table>
+        <div class="card d-flex align-items-center justify-content-center">
+            <h2>Exercices</h2>
+            <table >
+                <thead>
+                <tr>
+                    <th>Index</th>
+                    <th>Options</th>
+                    <th></th>
+                </tr>
+                </thead>
+                        <tbody>
+                        <!-- Loop through the elements of the data array -->
+                        {% for exercise in data.values()|first %}
+                            <tr>
+                                <td>{{ exercise }}</td>
+                                <td>
+                                    <form method="post" action="{{ url_for('render_sub_sub_data_cell', row_index=loop.index0) }}">
+                                        <button type="submit">Ouvrir</button>
+                                        {% set moduleNumber = session['moduleNumber'] %}
+                                        <input type="button" value="Commencer" onclick="commencerExercice('{{ exercise }}','{{ moduleNumber }}')">
+                                        <input type="button" value="Terminer" onclick="terminerExercice('{{ exercise }}','{{ moduleNumber }}')">
+                                    </form>
+                                </td>
+                                
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+            </table>
+        </div>
+
     </div>
 </body>
 </html>
@@ -55,15 +58,15 @@
         .then(response => {
             if (response.ok) {
                 console.log('Commencer Exercice success!');
-                showMessage('Exercise started successfully!');
+                showMessage('Exercice démarré!');
             } else {
                 console.error('Commencer Exercice failed:', response.statusText);
-                showMessage('Failed to start exercise. Please try again.');
+                showMessage('Erreur lors du démarrage, reessayez ultérieurement!');
             }
         })
         .catch(error => {
             console.error('Commencer Exercice failed:', error);
-            showMessage('An error occurred while starting the exercise. Please try again.');
+            showMessage('Erreur lors du démarrage, reessayez ultérieurement!');
         });
     }
     
@@ -82,15 +85,15 @@
         .then(response => {
             if (response.ok) {
                 console.log('Terminer Exercice success!');
-                showMessage('Exercise terminated successfully!');
+                showMessage('Exercice terminé!');
             } else {
                 console.error('Terminer Exercice failed:', response.statusText);
-                showMessage('Failed to terminate exercise. Please try again.');
+                showMessage('Erreur, reessayez ultérieurement!');
             }
         })
         .catch(error => {
             console.error('Terminer Exercice failed:', error);
-            showMessage('An error occurred while terminating the exercise. Please try again.');
+            showMessage('Erreur, reessayez ultérieurement!');
         });
     }
     

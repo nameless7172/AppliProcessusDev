@@ -24,10 +24,11 @@
     <div class="container">
         <h1 class="neon">Liste des programmes</h1>
         {% include "navbar.html" %}
-        <button class="btn btn-primary" onclick="getGoogleSheetData()">Charger les données de Google Sheet</button>
-        
-        <h3>Liste des programmes de musculation</h3>
-        <div id="result"></div>
+        <button class="btn btn-secondary d-flex align-items-center justify-content-center" onclick="getGoogleSheetData()">Charger les données de Google Sheet</button>
+        <div class="card d-flex align-items-center justify-content-center">
+            <h3>Liste des programmes de musculation</h3>
+            <div id="result"></div>
+        </div>
         {% include "footer.html" %}
     </div>
     <script>

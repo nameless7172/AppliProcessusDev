@@ -15,7 +15,7 @@
         
         {% for d in data %}
             {% if url[-1]|int + 1 == d[1][-1]|int and session['moduleNumber'] == d[0][-1]|int %}
-                <h1 class="mt-5">Exercice : {{ d[1] }}</h1>
+                <h1 class="mt-5">{{ d[1] }}</h1>
 
                 <div class="card">
                     <div class="card-body">
@@ -25,13 +25,13 @@
 
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">Exercice : {{ d[1] }}</h5>
+                        <h5 class="card-title"> {{ d[1] }}</h5>
                     </div>
                 </div>
 
-                <div class="card">
+                {# <div class="card">
                     <img class="card-img-top" src="{{ d[2] }}" alt="Card image cap">
-                </div>
+                </div> #}
 
                 <div class="card">
                     <div class="card-body">

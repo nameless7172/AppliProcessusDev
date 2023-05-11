@@ -9,12 +9,13 @@
         {% include "navbar.html" %}
     </div>
 <div class = "container">
+  <div class="card d-flex align-items-center justify-content-center">
     <h2>Modules</h2>
     <table>
         <thead>
           <tr>
             <th>Index</th>
-            <th>Data</th>
+            <th>Options</th>
             <th></th>
           </tr>
         </thead>
@@ -26,14 +27,15 @@
             <td>{{ element[0] }}</td> <!-- Show the value of the current element -->
             <td>
               <form method="post" action="{{ url_for('render_sub_data_cell', row_index=loop.index0) }}">
-                <button type="submit">Open</button>
-                <button>Delete</button>
+                <button type="submit">Ouvrir</button>
               </form>
             </td>
           </tr>
         {% endfor %}
         </tbody>
       </table>
+  </div>
+
 </div>
     
     {% include "footer.html" %}
